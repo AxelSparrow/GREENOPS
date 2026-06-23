@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: alerts-deployment
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: alerts-service
+
+  template:
+    metadata:
+      labels:
+        app: alerts-service
+
+    spec:
+      containers:
+        - name: alerts-service
+          image: greenops-alerts:latest
+          imagePullPolicy: Never
+
+          ports:
+            - containerPort: 8000

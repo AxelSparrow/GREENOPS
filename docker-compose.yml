@@ -1,0 +1,49 @@
+services:
+
+  auth-service:
+    build: ./auth-service
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  metrics-service:
+    build: ./Metrics
+    ports:
+      - "8001:8000"
+
+  alert-service:
+    build: ./Alerts
+    ports:
+      - "8002:8000"
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    environment:
+      POSTGRES_USER: greenops
+      POSTGRES_PASSWORD: greenops
+      POSTGRES_DB: greenops
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "greenops"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      

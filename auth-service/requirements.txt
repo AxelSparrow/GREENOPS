@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+psycopg2-binary
+sqlalchemy
+prometheus-fastapi-instrumentator
+python-jose[cryptography]
+bcrypt
