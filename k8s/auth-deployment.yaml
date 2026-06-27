@@ -1,26 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
-
 metadata:
   name: auth-deployment
-
 spec:
   replicas: 1
-
   selector:
     matchLabels:
       app: auth-service
-
   template:
     metadata:
       labels:
         app: auth-service
-
     spec:
-     containers:
-      - name: auth-service
-        image: greenops-auth-service
-        imagePullPolicy: IfNotPresent
-
-        ports:
-        - containerPort: 8000
+      containers:
+        - name: auth-service
+          image: greenops-auth-service
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
